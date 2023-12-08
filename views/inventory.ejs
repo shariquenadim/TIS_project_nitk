@@ -1,0 +1,81 @@
+
+<%- include('./layouts/header') %>
+
+<h1><span class="goback" onclick="window.history.back()">←</span> Inventory</h1>
+
+<% if (inventory.length> 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Medicine</th>
+                <th>Cost(per tablet)</th>
+                <th>Expiration Date</th>
+                <th>Tablets Available</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% inventory.forEach((medicine, index)=> { %>
+                <tr data-medicine-id="<%= medicine._id %>">
+                    <td contenteditable="true" data-field="medicineName"><%= medicine.medicineName %></td>
+                    <td contenteditable="true" data-field="costPerTablet"><%= medicine.costPerTablet %></td>
+                    <td contenteditable="true" data-field="expirationDate"><%= new Date(medicine.expirationDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) %></td>
+                    <td contenteditable="true" data-field="tabletsInStock"><%= medicine.tabletsInStock %></td>
+                    <td>
+                        <form method="post" action="/admin/remove-medicine/<%= medicine._id %>">
+                            <button type="submit">Remove</button>
+                        </form>
+                        <form method="post" class="update-form" action="/admin/update-medicine/<%= medicine._id %>">
+                            <button type="button" class="update-button">Update</button>
+                            <!-- Add hidden input fields with the correct names -->
+                            <input type="hidden" name="medicineName" value="<%= medicine.medicineName %>">
+                            <input type="hidden" name="costPerTablet" value="<%= medicine.costPerTablet %>">
+                            <input type="hidden" name="expirationDate" value="<%= medicine.expirationDate %>">
+                            <input type="hidden" name="tabletsInStock" value="<%= medicine.tabletsInStock %>">
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } else { %>
+    <p>No medicines added.</p>
+<% } %>
+
+<form method="post" action="/admin/add-medicine">
+    <label for="medicineName">Medicine Name:</label>
+    <input type="text" id="medicineName" name="medicineName" required>
+    <label for="costPerTablet">Cost per Tablet:</label>
+    <input type="number" id="costPerTablet" name="costPerTablet" required>
+    <label for="expirationDate">Expiration Date (MM/YYYY):</label>
+    <input type="text" id="expirationDate" name="expirationDate" pattern="(0[1-9]|1[0-2])\/\d{4}"
+        placeholder="MM/YYYY" required>
+    <label for="tabletsInStock">Tablets in Stock:</label>
+    <input type="number" id="tabletsInStock" name="tabletsInStock" required>
+    <button type="submit">Add Medicine</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.update-button').forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                var row = event.target.closest('tr');
+                var medicineId = row.dataset.medicineId;
+                var updateForm = row.querySelector('.update-form');
+                
+                // Loop through the editable cells and update the hidden input values
+                row.querySelectorAll('[contenteditable="true"]').forEach(function (cell) {
+                    var fieldName = cell.dataset.field;
+                    var hiddenInput = updateForm.querySelector(`input[name="${fieldName}"]`);
+                    hiddenInput.value = cell.innerText;
+                });
+
+                updateForm.action = '/admin/update-medicine/' + medicineId;
+                updateForm.submit();
+            });
+        });
+    });
+</script>
+
+<%- include('./layouts/footer') %>

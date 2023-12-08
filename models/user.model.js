@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const createHttpError = require('http-errors');
 const { roles } = require('../utils/constants');
 
+
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -45,5 +46,5 @@ UserSchema.methods.isValidPassword = async function (password) {
   }
 };
 
-const User = mongoose.model('User', UserSchema); // Changed 'user' to 'User'
+const User = mongoose.model('User', UserSchema);
 module.exports = User;
