@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Inventory = require('../models/inventory.model');
 
 router.get('/profile', async (req, res, next) => {
   // console.log(req.user);
@@ -7,7 +8,12 @@ router.get('/profile', async (req, res, next) => {
 });
 
 router.get('/epharma', async (req, res, next) => {
-  res.render('epharma'); 
+  try {
+    const inventory = await Inventory.find();
+    res.render('epharma', { inventory });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

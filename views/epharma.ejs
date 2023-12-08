@@ -1,5 +1,27 @@
 <%- include('./layouts/header') %>
 
 <h1><span class="goback" onclick="window.history.back()">←</span> Market Place</h1>
+<% if (inventory.length> 0) { %>
+    <table style="margin: auto;">
+        <thead>
+            <tr>
+                <th style="text-align: center;">Medicine</th>
+                <th style="text-align: center;">Cost(per tablet)</th>
+                <th style="text-align: center;">Expiration Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% inventory.forEach((medicine, index)=> { %>
+                <tr data-medicine-id="<%= medicine._id %>">
+                    <td contenteditable="true" data-field="medicineName" style="text-align: center;"><%= medicine.medicineName %></td>
+                    <td contenteditable="true" data-field="costPerTablet" style="text-align: center;"><%= medicine.costPerTablet %></td>
+                    <td contenteditable="true" data-field="expirationDate" style="text-align: center;"><%= new Date(medicine.expirationDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } else { %>
+    <p>Sorry, Services are not Available at your location.</p>
+<% } %>
 
 <%- include('./layouts/footer') %>

@@ -21,8 +21,8 @@
           <input type="hidden" name="id" value="<%= user.id %>" />
           <select name="role" id="role">
             <option value="ADMIN" <%= user.role === 'ADMIN' ? 'selected' : '' %> >ADMIN</option>
-            <option value="MODERATOR" <%= user.role === 'SELLER' ? 'selected' : '' %>>SELLER</option>
-            <option value="CLIENT" <%= user.role === 'CUSTOMER' ? 'selected' : '' %>>CUSTOMER</option>
+            <option value="SELLER" <%= user.role === 'SELLER' ? 'selected' : '' %>>SELLER</option>
+            <option value="CUSTOMER" <%= user.role === 'CUSTOMER' ? 'selected' : '' %>>CUSTOMER</option>
           </select>
           <input type="submit" value="Update">
         </form>

@@ -157,7 +157,7 @@ thead th:nth-child(1) {
 }
 
 tbody tr:hover {
-  /* background-color: #fdf2f8; */
+  background-color: #fdf2f8;
 }
 
 tbody tr td {
@@ -247,4 +247,35 @@ ul.messages * {
 }
 .messages .info {
   background-color: #93c5fd;
+}
+
+.btn{
+  background-color: #db2777;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.btn:hover {
+  background-color: #b2185e;
+  transform: scale(1.1);
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+.update-button{
+  background-color: #db2777;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.update-button:hover {
+  background-color: #b2185e;
+  transform: scale(1.1);
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
 }

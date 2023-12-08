@@ -1,8 +1,26 @@
 const User = require('../models/user.model');
+const DECISION = true;
 const Inventory = require('../models/inventory.model');
 const router = require('express').Router();
 const mongoose = require('mongoose');
 const { roles } = require('../utils/constants');
+
+const decision= DECISION;{
+    if(DECISION == 'Permit'){
+        next();
+    }
+    else{
+         console.log("You are not authorized to access this route.")
+    }
+};
+
+const isAdmin = (req, res, next) => {
+  if (req.user.role !== roles.ADMIN) {
+    req.flash('warning', 'You are not authorized to access this route.');
+    return res.redirect('/admin/inventory'); 
+  }
+  next();
+};
 
 router.get('/users', async (req, res, next) => {
   try {
@@ -84,7 +102,7 @@ router.get('/inventory', async (req, res, next) => {
   }
 });
 
-router.post('/add-medicine', async (req, res, next) => {
+router.post('/add-medicine', isAdmin, async (req, res, next) => {
   try {
     const { medicineName, costPerTablet, expirationDate, tabletsInStock } = req.body;
     const user = req.user;
@@ -116,7 +134,7 @@ router.post('/add-medicine', async (req, res, next) => {
   }
 });
 
-router.post('/remove-medicine/:id', async (req, res, next) => {
+router.post('/remove-medicine/:id', isAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -147,7 +165,6 @@ router.post('/remove-medicine/:id', async (req, res, next) => {
 });
 
 router.post('/update-medicine/:id', async (req, res, next) => {
-  console.log('Request Body:', req.body);
   try {
     const { id } = req.params;
 

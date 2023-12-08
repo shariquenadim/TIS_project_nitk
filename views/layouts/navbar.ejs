@@ -4,15 +4,15 @@
     <li><a href="/">Home</a></li>
     <% if (user) { %>
     <li><a href="/user/profile">Profile</a></li>
-    <% if (user.role === 'ADMIN') { %>
+    <% if (['ADMIN'].includes(user.role)) { %>
     <li><a href="/admin/users">Manage Users</a></li>
     <% } %>
     <% if (['ADMIN', 'SELLER', 'CUSTOMER'].includes(user.role)) { %>
       <li><a href="/user/epharma">E-Pharma</a></li>
     <% } %>
-    <% if (['ADMIN'].includes(user.role)) { %>
+    <% if (['ADMIN', 'SELLER'].includes(user.role)) { %>
       <li><a href="/admin/inventory">Inventory</a></li>
-    <% } %>     
+    <% } %>        
     <li><a href="/auth/logout">Logout</a></li>
     <% } else { %>
     <li><a href="/auth/register">Register</a></li>

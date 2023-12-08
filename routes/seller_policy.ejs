@@ -1,0 +1,122 @@
+const url = 'https://localhost:9443/api/identity/entitlement/decision/pdp';
+
+/** @type {(res: String, sub: String, action: String) => Request} */
+const createRequest = (resource, subject, action) => {
+    const data = `
+    <Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${c_table}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${Seller}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${GET}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    </Request>`;
+    
+    console.log(`/app${resource}\n`, data);
+    return new Request(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/xml',
+            'Authorization': `Basic YWRtaW46YWRtaW4=`,
+        },
+        body: data,
+    });
+}
+
+const creatRequest = (resource, subject, action) => {
+    const data = `
+    <Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${s_table}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${Seller}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${GET}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    </Request>`;
+    
+    console.log(`/app${resource}\n`, data);
+    return new Request(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/xml',
+            'Authorization': `Basic YWRtaW46YWRtaW4=`,
+        },
+        body: data,
+    });
+}
+
+const decision = /<Decision>([^<]*)<\/Decision>/;
+
+/** @type {(data: String) => null | String} */
+const parseResponse = (data) => {
+    const matches = data.match(decision);
+    if (matches == null) {
+        return null;
+    }
+    return matches[1];
+}
+
+
+const DECISION = {
+    NA: 'NotApplicable',
+    DENY: 'Deny',
+    PERMIT: 'Permit',
+};
+
+/** @type {(res: String, sub: String, action: String) => Promise<null | String>} */
+const xacmlAuth = async (resource, subject, action) => {
+    const req = createRequest(resource, subject, action);
+    const res = await fetch(req);
+    return parseResponse(await res.text());
+}
+
+const creRequest = (resource, subject, action) => {
+    const data = `
+    <Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${s_table}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${Seller}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+    <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">${PUT}</AttributeValue>
+    </Attribute>
+    </Attributes>
+    </Request>`;
+    
+    console.log(`/app${resource}\n`, data);
+    return new Request(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/xml',
+            'Authorization': `Basic YWRtaW46YWRtaW4=`,
+        },
+        body: data,
+    });
+}
+
+export { xacmlAuth, DECISION }

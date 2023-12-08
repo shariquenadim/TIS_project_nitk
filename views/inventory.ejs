@@ -7,26 +7,27 @@
     <table>
         <thead>
             <tr>
-                <th>Medicine</th>
-                <th>Cost(per tablet)</th>
-                <th>Expiration Date</th>
-                <th>Tablets Available</th>
-                <th>Actions</th>
+                <th style="text-align: center;">Medicine</th>
+                <th style="text-align: center;">Cost(per tablet)</th>
+                <th style="text-align: center;">Expiration Date</th>
+                <th style="text-align: center;">Tablets Available</th>
+                <th style="text-align: center;">Actions</th>
             </tr>
         </thead>
         <tbody>
             <% inventory.forEach((medicine, index)=> { %>
                 <tr data-medicine-id="<%= medicine._id %>">
-                    <td contenteditable="true" data-field="medicineName"><%= medicine.medicineName %></td>
-                    <td contenteditable="true" data-field="costPerTablet"><%= medicine.costPerTablet %></td>
-                    <td contenteditable="true" data-field="expirationDate"><%= new Date(medicine.expirationDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) %></td>
-                    <td contenteditable="true" data-field="tabletsInStock"><%= medicine.tabletsInStock %></td>
-                    <td>
+                    <td contenteditable="true" data-field="medicineName" style="text-align: center;"><%= medicine.medicineName %></td>
+                    <td contenteditable="true" data-field="costPerTablet" style="text-align: center;"><%= medicine.costPerTablet %></td>
+                    <td contenteditable="true" data-field="expirationDate" style="text-align: center;"><%= new Date(medicine.expirationDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) %></td>
+                    <td contenteditable="true" data-field="tabletsInStock" style="text-align: center;"><%= medicine.tabletsInStock %></td>
+                    <td style="text-align: center;">
                         <form method="post" action="/admin/remove-medicine/<%= medicine._id %>">
-                            <button type="submit">Remove</button>
+                            <button type="submit" class="btn">Remove</button>
                         </form>
+                        <br>
                         <form method="post" class="update-form" action="/admin/update-medicine/<%= medicine._id %>">
-                            <button type="button" class="update-button">Update</button>
+                            <button type="button" class="update-button" class="btn">Update</button>
                             <!-- Add hidden input fields with the correct names -->
                             <input type="hidden" name="medicineName" value="<%= medicine.medicineName %>">
                             <input type="hidden" name="costPerTablet" value="<%= medicine.costPerTablet %>">
@@ -42,7 +43,7 @@
     <p>No medicines added.</p>
 <% } %>
 
-<form method="post" action="/admin/add-medicine">
+<form method="post" action="/admin/add-medicine" class="lg-form">
     <label for="medicineName">Medicine Name:</label>
     <input type="text" id="medicineName" name="medicineName" required>
     <label for="costPerTablet">Cost per Tablet:</label>
@@ -50,9 +51,9 @@
     <label for="expirationDate">Expiration Date (MM/YYYY):</label>
     <input type="text" id="expirationDate" name="expirationDate" pattern="(0[1-9]|1[0-2])\/\d{4}"
         placeholder="MM/YYYY" required>
-    <label for="tabletsInStock">Tablets in Stock:</label>
+    <label for="tabletsInStock">No. Tablets in Stock:</label>
     <input type="number" id="tabletsInStock" name="tabletsInStock" required>
-    <button type="submit">Add Medicine</button>
+    <center><button type="submit" class="btn">Add Medicine</button></center>
 </form>
 
 <script>
