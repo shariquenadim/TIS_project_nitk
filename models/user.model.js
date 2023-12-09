@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: [roles.ADMIN, roles.SELLER, roles.CUSTOMER],
-    default: roles.client,
+    default: roles.CUSTOMER,
   },
 });
 
@@ -29,7 +29,7 @@ UserSchema.pre('save', async function (next) {
       const hashedPassword = await bcrypt.hash(this.password, salt);
       this.password = hashedPassword;
       if (this.email === process.env.ADMIN_EMAIL.toLowerCase()) {
-        this.role = roles.admin;
+        this.role = roles.ADMIN;
       }
     }
     next();
