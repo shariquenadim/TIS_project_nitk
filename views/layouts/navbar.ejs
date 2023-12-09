@@ -1,22 +1,64 @@
+
+<style>
+  nav > h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c2a2b;
+    position: relative;
+  }
+
+  .jt__row {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .jt__text {
+    display: block;
+    transform-origin: bottom left;
+    animation: moveIn 3s 0s cubic-bezier(.36,0,.06,1) alternate infinite;
+  }
+
+  @keyframes moveIn {
+    50%, 100% {
+      transform: translateY(0em);
+    }
+    0% {
+      opacity: 0;
+      filter: blur(10px);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0px);
+    }
+  }
+</style>
 <nav>
-  <h2>2Mg</h2>
+  <h2 class="jt">
+    <span class="jt__row">
+      <span class="jt__text">2Mg</span>
+    </span>
+    <span class="jt__row jt__row--sibling" aria-hidden="true">
+      <span class="jt__text">Pharma</span>
+    </span>
+  </h2>
   <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="/" class="active">Home</a></li>
     <% if (user) { %>
-    <li><a href="/user/profile">Profile</a></li>
-    <% if (['ADMIN'].includes(user.role)) { %>
-    <li><a href="/admin/users">Manage Users</a></li>
-    <% } %>
-    <% if (['ADMIN', 'SELLER', 'CUSTOMER'].includes(user.role)) { %>
-      <li><a href="/user/epharma">E-Pharma</a></li>
-    <% } %>
-    <% if (['ADMIN', 'SELLER'].includes(user.role)) { %>
-      <li><a href="/admin/inventory">Inventory</a></li>
-    <% } %>        
-    <li><a href="/auth/logout">Logout</a></li>
+      <li><a href="/user/profile">Profile</a></li>
+      <% if (['ADMIN'].includes(user.role)) { %>
+        <li><a href="/admin/users">Manage Users</a></li>
+      <% } %>
+      <% if (['ADMIN', 'SELLER', 'CUSTOMER'].includes(user.role)) { %>
+        <li><a href="/user/epharma">E-Pharma</a></li>
+      <% } %>
+      <% if (['ADMIN', 'SELLER'].includes(user.role)) { %>
+        <li><a href="/admin/inventory">Inventory</a></li>
+      <% } %>        
+      <li><a href="/auth/logout">Logout</a></li>
     <% } else { %>
-    <li><a href="/auth/register">Register</a></li>
-    <li><a href="/auth/login">Login</a></li>
+      <li><a href="/auth/register">Register</a></li>
+      <li><a href="/auth/login">Login</a></li>
     <% } %>
   </ul>
 </nav>

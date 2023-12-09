@@ -1,3 +1,27 @@
-</main>
-</body>
-</html>
+<style>
+    footer {
+      background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+      padding: 12px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  
+    footer p {
+      font-weight: bold;
+    }
+  </style>
+  
+  <footer>
+    <p id="copyright">&copy; <span id="currentYear"></span>, NITK CSE Department</p>
+  
+    <script>
+      // Get the current year
+      const currentYear = new Date().getFullYear();
+  
+      // Write the current year to the HTML
+      document.getElementById('currentYear').innerText = currentYear;
+    </script>
+  </footer>
+  

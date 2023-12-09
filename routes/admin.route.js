@@ -17,7 +17,7 @@ const decision= DECISION;{
 const isAdmin = (req, res, next) => {
   if (req.user.role !== roles.ADMIN) {
     req.flash('warning', 'You are not authorized to access this route.');
-    return res.redirect('/admin/inventory'); 
+    return res.redirect('/admin/inventory');
   }
   next();
 };

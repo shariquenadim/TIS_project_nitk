@@ -104,7 +104,7 @@ mongoose
 // }
 
 function ensureAdmin(req, res, next) {
-  if (req.user.role === roles.admin || roles.moderator) {
+  if (req.user.role === roles.ADMIN || roles.SELLER) {
     next();
   } else {
     req.flash('warning', 'you are not Authorized to see this route');

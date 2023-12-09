@@ -1,23 +1,78 @@
 <%- include('./layouts/header') %>
 
+<style>
+  body {
+    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #d44585;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .avatar span {
+    font-size: 55px;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .info {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .info p {
+    margin: 8px 0;
+  }
+
+  .title {
+    font-weight: bold;
+  }
+
+  .subtitle {
+    color: #555;
+  }
+
+</style>
+
 <h1><span class="goback" onclick="window.history.back()">←</span> Profile</h1>
 
 <div class="profile">
-  <div>
-    <p class="title">ID</p>
-    <p class="subtitle"><%= person.id %></p>
+  <div class="avatar">
+    <span><%= person.email.charAt(0).toUpperCase() %></span>
   </div>
-  <div>
+  <div class="info">
     <p class="title">Email/username</p>
     <p class="subtitle"><%= person.email %></p>
   </div>
-  <div>
+  <div class="info">
     <p class="title">Role</p>
     <p class="subtitle"><%= person.role %></p>
   </div>
-  <div>
-    <p class="title">User object</p>
-    <pre class="subtitle"><%= person %></pre>
+  <div class="info">
+    <p class="title">ID</p>
+    <p class="subtitle"><%= person.id %></p>
   </div>
 </div>
+
 <%- include('./layouts/footer') %>
