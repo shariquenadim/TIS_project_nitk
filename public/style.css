@@ -338,7 +338,7 @@ border: none;
 .button {
 --border-right: 6px;
 --text-stroke-color: rgba(255,255,255,0.6);
---animation-color:rgb(20, 36, 50);
+--animation-color:rgba(20, 36, 50, 0.728);
 --fs-size: 2em;
 letter-spacing: 3px;
 text-decoration: none;
