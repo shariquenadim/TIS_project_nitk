@@ -78,7 +78,7 @@ app.use((error, req, res, next) => {
 });
 
 // Setting the PORT
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 
 // Making a connection to MongoDB Atlas
 mongoose
