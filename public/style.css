@@ -17,6 +17,7 @@ body {
   font-size: 1rem;
 }
 
+
 nav {
   max-width: 80%;
   margin: auto;
@@ -46,6 +47,89 @@ a:hover {
   background-color: #e17cb2;
   color: #ffffff;
 }
+#menu-toggle,
+#menu-close {
+  display: none;
+}
+
+/* Add this CSS for small devices (e.g., mobile) */
+@media only screen and (max-width: 768px) {
+  nav {
+    align-items: stretch;
+    justify-content: space-between;
+  }
+
+  .jt__row {
+    order: -1;
+  }
+
+  #menu-toggle {
+    display: block;
+    order: 1;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  #menu-close {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 99999999;
+  }
+
+  nav.open #menu-toggle {
+    display: none;
+  }
+
+  nav.open #menu-close {
+    display: block;
+  }
+
+  nav > ul {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 99.9%;
+    background-color: #ffffff; /* Set your background color */
+    z-index: 9998;
+    padding-top: 80px; /* Adjust as needed */
+    box-sizing: border-box;
+  }
+
+  nav > ul > li {
+    display: block;
+    text-align: center;
+    margin-bottom: 1rem; /* Adjust as needed */
+  }
+
+  nav > ul > li > a {
+    display: block;
+    padding: 16px;
+    font-size: 1.2rem; /* Adjust as needed */
+  }
+
+  nav > ul > li > a:hover {
+    background-color: #e17cb2;
+    color: #ffffff;
+  }
+
+  nav.open ul {
+    display: block;
+  }
+}
+
+
+/* Add this to style the menu and close button icons */
+#menu-toggle,
+#menu-close {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #db2777;
+}
+
 
 h1.title {
   text-align: center;
